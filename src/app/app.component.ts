@@ -13,7 +13,7 @@ import { User, UserState } from './shared/user.model';
 })
 export class AppComponent implements OnInit {
   title = 'ngrx-entity-state-adapter';
-  users$: Observable<User[]> | undefined;
+  users$: Observable<User[] | any> = new Observable<User[]>();
   form: FormGroup;
 
   constructor(
@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new ListUsers());
     this.users$ = this.store.pipe(select(selectAllUsers));
   }
 
@@ -38,5 +37,9 @@ export class AppComponent implements OnInit {
 
   addUser() {
     this.store.dispatch(new AddUser(this.form.value));
+  }
+
+  refresh() {
+    this.store.dispatch(new ListUsers());
   }
 }

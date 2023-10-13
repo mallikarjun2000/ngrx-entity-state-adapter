@@ -1,3 +1,5 @@
+import { EntityUserState } from 'src/store/user.reducer';
+
 export interface User {
   id: 1;
   firstname: string;
@@ -6,5 +8,5 @@ export interface User {
 }
 
 export interface UserState {
-  users: User[];
+  users: EntityUserState;
 }

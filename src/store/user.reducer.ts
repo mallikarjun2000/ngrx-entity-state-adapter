@@ -13,15 +13,15 @@ export const initialUsersList: User[] = [
   },
 ];
 
-const initialUserState: UserState = {
-  users: [],
-};
-
 const usersAdapter: EntityAdapter<User> = createEntityAdapter<User>({
-  selectId: (user: User) => user.id,
+  selectId: (user: User) => user.handle,
 });
 
 const initialState = usersAdapter.getInitialState();
+
+const initialUserState: UserState = {
+  users: initialState,
+};
 
 export function usersReducer(
   state: UserState = initialUserState,
@@ -31,21 +31,18 @@ export function usersReducer(
     case UserActionTypes.ADD_USER: {
       return {
         ...state,
-        users: state.users.concat([action.user]),
+        users: usersAdapter.addOne(action.user, state.users),
       };
     }
 
     case UserActionTypes.LIST_USERS: {
-      return {
-        ...state,
-        users: initialUsersList,
-      };
+      return state;
     }
 
     case UserActionTypes.DELETE_USER: {
       return {
         ...state,
-        users: state.users.filter((user) => user.handle !== action.user.handle),
+        users: usersAdapter.removeOne(action.user.handle, state.users),
       };
     }
 

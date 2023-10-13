@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { usersReducer } from 'src/store/user.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,9 @@ import { usersReducer } from 'src/store/user.reducer';
     AppRoutingModule,
     ReactiveFormsModule,
     StoreModule.forRoot<{}>({ users: usersReducer }),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx Practice App',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
